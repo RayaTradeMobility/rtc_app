@@ -1,9 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:rtc_app/view/login_screen.dart';
 import 'package:rtc_app/view/profile_screen.dart';
 
 import '../view/categories_screen.dart';
 import '../view/home_screen.dart';
-
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({super.key});
@@ -23,7 +24,7 @@ class MyDrawer extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Image.asset(
-                  'assets/rayawhite.png',
+                  'assets/images/rayawhite.png',
                   fit: BoxFit.contain,
                   height: 50,
                 ),
@@ -34,12 +35,12 @@ class MyDrawer extends StatelessWidget {
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Row(children: [
-                  Icon(Icons.notifications_active),
-                  SizedBox(
+                Row(children: [
+                  const Icon(Icons.notifications_active),
+                  const SizedBox(
                     width: 8,
                   ),
-                  Text('Notification'),
+                  Text(tr('Notification')),
                 ]),
                 Row(
                   children: [
@@ -50,11 +51,11 @@ class MyDrawer extends StatelessWidget {
                           color: Colors.black,
                           borderRadius: BorderRadius.all(Radius.circular(5.0)),
                         ),
-                        child: const Center(
+                        child: Center(
                             child: Text(
-                              '1',
-                              style: TextStyle(color: Colors.white),
-                            )))
+                          tr('1'),
+                          style: const TextStyle(color: Colors.white),
+                        )))
                   ],
                 )
               ],
@@ -66,13 +67,13 @@ class MyDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            title: const Row(
+            title: Row(
               children: [
-                Icon(Icons.feed_rounded),
-                SizedBox(
+                const Icon(Icons.feed_rounded),
+                const SizedBox(
                   width: 8,
                 ),
-                Text('News'),
+                Text(tr('News')),
               ],
             ),
             onTap: () {
@@ -84,13 +85,13 @@ class MyDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            title: const Row(
+            title: Row(
               children: [
-                Icon(Icons.feedback),
-                SizedBox(
+                const Icon(Icons.feedback),
+                const SizedBox(
                   width: 8,
                 ),
-                Text('Complaints'),
+                Text(tr('Complaints')),
               ],
             ),
             onTap: () {
@@ -102,13 +103,13 @@ class MyDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            title: const Row(
+            title: Row(
               children: [
-                Icon(Icons.wb_iridescent),
-                SizedBox(
+                const Icon(Icons.wb_iridescent),
+                const SizedBox(
                   width: 8,
                 ),
-                Text('Suggestions and Inquiries'),
+                Text(tr('Suggestions and Inquiries')),
               ],
             ),
             onTap: () {
@@ -118,13 +119,13 @@ class MyDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            title: const Row(
+            title: Row(
               children: [
-                Icon(Icons.insights_sharp),
-                SizedBox(
+                const Icon(Icons.insights_sharp),
+                const SizedBox(
                   width: 8,
                 ),
-                Text('Know Your Company'),
+                Text(tr('Know Your Company')),
               ],
             ),
             onTap: () {
@@ -134,13 +135,13 @@ class MyDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            title: const Row(
+            title: Row(
               children: [
-                Icon(Icons.local_police),
-                SizedBox(
+                const Icon(Icons.local_police),
+                const SizedBox(
                   width: 8,
                 ),
-                Text('Policies'),
+                Text(tr('Policies')),
               ],
             ),
             onTap: () {
@@ -150,13 +151,13 @@ class MyDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            title: const Row(
+            title: Row(
               children: [
-                Icon(Icons.work),
-                SizedBox(
+                const Icon(Icons.work),
+                const SizedBox(
                   width: 8,
                 ),
-                Text('Jobs'),
+                Text(tr('Jobs')),
               ],
             ),
             onTap: () {
@@ -166,13 +167,13 @@ class MyDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            title: const Row(
+            title: Row(
               children: [
-                Icon(Icons.local_offer),
-                SizedBox(
+                const Icon(Icons.local_offer),
+                const SizedBox(
                   width: 8,
                 ),
-                Text('Employees Offers'),
+                Text(tr('Employees Offers')),
               ],
             ),
             onTap: () {
@@ -182,13 +183,13 @@ class MyDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            title: const Row(
+            title: Row(
               children: [
-                Icon(Icons.event),
-                SizedBox(
+                const Icon(Icons.event),
+                const SizedBox(
                   width: 8,
                 ),
-                Text('Events'),
+                Text(tr('Events')),
               ],
             ),
             onTap: () {
@@ -198,13 +199,13 @@ class MyDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            title: const Row(
+            title: Row(
               children: [
-                Icon(Icons.account_circle),
-                SizedBox(
+                const Icon(Icons.account_circle),
+                const SizedBox(
                   width: 8,
                 ),
-                Text('My Profile'),
+                Text(tr('My Profile')),
               ],
             ),
             onTap: () {
@@ -216,18 +217,20 @@ class MyDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            title: const Row(
+            title: Row(
               children: [
-                Icon(Icons.logout),
-                SizedBox(
+                const Icon(Icons.logout),
+                const SizedBox(
                   width: 8,
                 ),
-                Text('Logout'),
+                Text(tr('Logout')),
               ],
             ),
             onTap: () {
               // Handle AFR menu item click
-              Navigator.pop(context); // Close the drawer
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return const LoginPage();
+              })); // Close the drawer
               // Add your logic here
             },
           ),

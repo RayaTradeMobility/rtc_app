@@ -14,17 +14,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(),
-      drawer: MyDrawer(),
+      appBar: const MyAppBar(),
+      drawer: const MyDrawer(),
       body: Padding(
         padding: const EdgeInsets.all(28.0),
         child: SingleChildScrollView(
           child: Column(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
-              Center(
+              const Center(
                 child: CircleAvatar(
                   radius: 90.0,
                   backgroundImage: AssetImage(
@@ -32,33 +32,33 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
-              Divider(
+              const Divider(
                 height: 53,
               ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     'Name:',
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
                   ),
                   Container(
                       constraints: BoxConstraints(
                           maxWidth: MediaQuery.of(context).size.width * 0.6),
-                      child: Text(
+                      child: const Text(
                         ' Mohamed Osama Mahmoud Ibrahim',
                         style: TextStyle(fontSize: 18),
                         maxLines: 2,
                       ))
                 ],
               ),
-              Divider(
+              const Divider(
                 height: 53,
               ),
-              Row(
+              const Row(
                 children: [
                   Text(
                     'Title:',
@@ -70,10 +70,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   )
                 ],
               ),
-              Divider(
+              const Divider(
                 height: 53,
               ),
-              Row(
+              const Row(
                 children: [
                   Text(
                     'Company:',
@@ -85,10 +85,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   )
                 ],
               ),
-              Divider(
+              const Divider(
                 height: 53,
               ),
-              Row(
+              const Row(
                 children: [
                   Text(
                     'Department:',
@@ -100,10 +100,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   )
                 ],
               ),
-              Divider(
+              const Divider(
                 height: 53,
               ),
-              Row(
+              const Row(
                 children: [
                   Text(
                     'Grade:',
@@ -115,10 +115,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   )
                 ],
               ),
-              Divider(
+              const Divider(
                 height: 53,
               ),
-              Row(
+              const Row(
                 children: [
                   Text(
                     'Email:',
@@ -130,10 +130,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   )
                 ],
               ),
-              Divider(
+              const Divider(
                 height: 53,
               ),
-              Row(
+              const Row(
                 children: [
                   Text(
                     'Password:',
@@ -145,7 +145,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ],
               ),
-              ElevatedButton(onPressed: () {}, child: Text('Change Password')),
+              ElevatedButton(onPressed: () {}, child: const Text('Change Password')),
             ],
           ),
         ),
