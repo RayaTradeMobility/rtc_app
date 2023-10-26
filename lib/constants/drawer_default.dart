@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:rtc_app/constants/constant.dart';
 import 'package:rtc_app/view/login_screen.dart';
 import 'package:rtc_app/view/profile_screen.dart';
 
@@ -17,7 +18,7 @@ class MyDrawer extends StatelessWidget {
         children: [
           DrawerHeader(
             decoration: const BoxDecoration(
-              color: Colors.blue,
+              color: MyColorsSample.primary,
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

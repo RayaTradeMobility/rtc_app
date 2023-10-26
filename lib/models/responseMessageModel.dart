@@ -1,12 +1,12 @@
 // ignore_for_file: file_names
 
-class GetOrder {
+class ResponseMessage {
   String? code;
   String? message;
 
-  GetOrder({this.code, this.message});
+  ResponseMessage({this.code, this.message});
 
-  GetOrder.fromJson(Map<String, dynamic> json) {
+  ResponseMessage.fromJson(Map<String, dynamic> json) {
     code = json['code'];
     message = json['message'];
   }

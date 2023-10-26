@@ -3,6 +3,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:rtc_app/constants/constant.dart';
 import 'package:rtc_app/constants/provider.dart';
 
 import '../view/home_screen.dart';
@@ -23,7 +24,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: Colors.blue,
+      backgroundColor: MyColorsSample.primary,
       leading: IconButton(
         onPressed: () {
           Scaffold.of(context).openDrawer();

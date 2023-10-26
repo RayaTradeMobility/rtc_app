@@ -73,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Column(
                               children: [
                                 Container(
-                                  color: Colors.white,
+                                  color: Colors.transparent,
                                   height: height * 0.3,
                                   width: width * .9,
                                   child: ClipRRect(

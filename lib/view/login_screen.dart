@@ -1,11 +1,16 @@
-// ignore_for_file: deprecated_member_use
+// ignore_for_file: deprecated_member_use, use_build_context_synchronously
 
 import 'package:animate_do/animate_do.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
+import 'package:rtc_app/constants/constant.dart';
+import 'package:rtc_app/models/LoginModel.dart';
 import 'package:rtc_app/view/home_screen.dart';
 
+import '../API Online/API.dart';
 import '../constants/provider.dart';
 
 class LoginPage extends StatefulWidget {
@@ -16,18 +21,27 @@ class LoginPage extends StatefulWidget {
 }
 
 class LoginPageState extends State<LoginPage> {
+  bool isLoading=false;
   void _toggleDarkMode(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
     final newMode =
         themeProvider.mode == ThemeMode.dark ? ThemeMode.light : ThemeMode.dark;
     themeProvider.setMode(newMode);
-  }
 
+  }
+  final _formKey = GlobalKey<FormState>();
+  final _formKey1 = GlobalKey<FormState>();
+
+
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+  bool passwordVisibility = true;
+API api = API();
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -45,7 +59,8 @@ class LoginPageState extends State<LoginPage> {
                         child: Container(
                           decoration: const BoxDecoration(
                               image: DecorationImage(
-                                  image: AssetImage('assets/images/background-.png'),
+                                  image: AssetImage(
+                                      'assets/images/background-.png'),
                                   fit: BoxFit.fill)),
                         )),
                   ),
@@ -62,6 +77,22 @@ class LoginPageState extends State<LoginPage> {
                             image: AssetImage('assets/images/background-1.png'),
                             fit: BoxFit.fill,
                           )),
+                        )),
+                  ),
+                  Positioned(
+                    left: width / 3,
+                    top: MediaQuery.of(context).size.height / 5,
+                    height: 44,
+                    width: width / 3,
+                    child: FadeInUp(
+                        duration: const Duration(seconds: 1),
+                        child: Container(
+                          decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                  opacity: 0.8,
+                                  image:
+                                      AssetImage('assets/images/rayawhite.png'),
+                                  fit: BoxFit.fill)),
                         )),
                   ),
                   Positioned(
@@ -193,23 +224,63 @@ class LoginPageState extends State<LoginPage> {
                                       bottom: BorderSide(
                                           color: Color.fromRGBO(
                                               196, 135, 198, .3)))),
-                              child: TextField(
-                                decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    hintText: tr("Username"),
-                                    hintStyle:
-                                        TextStyle(color: Colors.grey.shade700)),
+                              child: Form(
+                                key: _formKey1,
+                                child: TextFormField(
+                                  validator: (username) {
+                                    if (isUsernameValid(username!)) {
+                                      return null;
+                                    } else {
+                                      return 'Please Enter Valid Username';
+                                    }
+                                  },
+                                  controller: usernameController,
+                                  decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                      hintText: tr("Username"),
+                                      hintStyle:
+                                          TextStyle(color: Colors.grey.shade700)),
+                                ),
                               ),
+
                             ),
+                            SizedBox(height: 10,),
                             Container(
                               padding: const EdgeInsets.all(10),
-                              child: TextField(
-                                obscureText: true,
-                                decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    hintText: tr("Password"),
-                                    hintStyle:
-                                        TextStyle(color: Colors.grey.shade700)),
+                              child: Form(
+                                key: _formKey,
+                                child: TextFormField(
+                                  validator: (password) {
+                                    if (isPasswordValid(password!)) {
+                                      return null;
+                                    } else {
+                                      return 'Please Enter Valid Password';
+                                    }
+                                  },
+                                  controller: passwordController,
+                                  obscureText: passwordVisibility,
+
+                                  decoration: InputDecoration(
+                                      suffixIcon: IconButton(
+                                        icon: Icon(
+                                          // Based on passwordVisible state choose the icon
+                                          passwordVisibility
+                                              ? Icons.visibility
+                                              : Icons.visibility_off,
+                                          color: Theme.of(context).primaryColorDark,
+                                        ),
+                                        onPressed: () {
+                                          setState(() {
+                                            passwordVisibility = !passwordVisibility;
+                                          });
+                                        },
+                                      ),
+
+                                      border: InputBorder.none,
+                                      hintText: tr("Password"),
+                                      hintStyle:
+                                          TextStyle(color: Colors.grey.shade700)),
+                                ),
                               ),
                             )
                           ],
@@ -224,11 +295,46 @@ class LoginPageState extends State<LoginPage> {
                   FadeInUp(
                       duration: const Duration(milliseconds: 1900),
                       child: MaterialButton(
-                        onPressed: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) {
-                            return const HomeScreen();
-                          }));
+                        onPressed: () async{
+                          setState(() {
+                            isLoading = true;
+                          });
+                          if (_formKey.currentState!.validate() && _formKey1.currentState!.validate()) {
+                            LoginModel user = await api.login(
+                                usernameController.text,
+                                passwordController.text);
+
+                            if (user.name != null) {
+                              setState(() {
+                                isLoading = false;
+                              });
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const HomeScreen(),
+                                ),
+                              );
+                            }
+                            else {
+                              setState(() {
+                                isLoading = false;
+                              });
+                              Fluttertoast.showToast(
+                                msg: "Invalid Username or Password",
+                                toastLength: Toast.LENGTH_LONG,
+                                gravity: ToastGravity.CENTER,
+                                timeInSecForIosWeb: 1,
+                                backgroundColor: MyColorsSample.primary,
+                                textColor: Colors.white,
+                                fontSize: 16.0,
+                              );
+                            }
+                          }
+                          else {
+                            setState(() {
+                              isLoading = false;
+                            });
+                          }
                         },
                         color: const Color.fromRGBO(49, 39, 79, 1),
                         shape: RoundedRectangleBorder(
@@ -236,10 +342,14 @@ class LoginPageState extends State<LoginPage> {
                         ),
                         height: 50,
                         child: Center(
-                          child: Text(
+                          child:isLoading ?const SpinKitChasingDots(
+                            size: 18  ,
+                            color: Colors.blue,
+                          ) : Text(
+
                             tr("Login"),
                             style: const TextStyle(color: Colors.white),
-                          ),
+                          )
                         ),
                       )),
                   const SizedBox(
@@ -254,3 +364,8 @@ class LoginPageState extends State<LoginPage> {
     );
   }
 }
+bool isPasswordValid(String password) => password.length >= 6;
+bool isUsernameValid(String username) => username.length >= 6;
+
+
+
