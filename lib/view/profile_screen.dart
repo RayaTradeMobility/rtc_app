@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:rtc_app/models/LoginModel.dart';
 
 import '../constants/appbar_default.dart';
 import '../constants/drawer_default.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
-
+  const ProfileScreen({super.key, required this.user});
+final LoginModel user;
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
@@ -15,7 +16,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const MyAppBar(),
-      drawer: const MyDrawer(),
+      drawer:  MyDrawer(user: widget.user,),
       body: Padding(
         padding: const EdgeInsets.all(28.0),
         child: SingleChildScrollView(

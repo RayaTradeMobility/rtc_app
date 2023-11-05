@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:rtc_app/models/LoginModel.dart';
 
 import '../constants/appbar_default.dart';
 import '../constants/drawer_default.dart';
@@ -11,7 +12,8 @@ import '../view-model/news_view_model.dart';
 import 'home_screen.dart';
 
 class CategoriesScreen extends StatefulWidget {
-  const CategoriesScreen({Key? key}) : super(key: key);
+  const CategoriesScreen({Key? key, required this.user}) : super(key: key);
+  final LoginModel user;
 
   @override
   CategoriesScreenState createState() => CategoriesScreenState();
@@ -39,7 +41,7 @@ class CategoriesScreenState extends State<CategoriesScreen> {
 
     return Scaffold(
       appBar: const MyAppBar(),
-      drawer: const MyDrawer(),
+      drawer:  MyDrawer(user:widget.user),
       body: Column(
         children: [
           SizedBox(

@@ -244,7 +244,7 @@ API api = API();
                               ),
 
                             ),
-                            SizedBox(height: 10,),
+                            const SizedBox(height: 10,),
                             Container(
                               padding: const EdgeInsets.all(10),
                               child: Form(
@@ -311,7 +311,7 @@ API api = API();
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const HomeScreen(),
+                                  builder: (context) =>  HomeScreen(user:user),
                                 ),
                               );
                             }
@@ -365,7 +365,7 @@ API api = API();
   }
 }
 bool isPasswordValid(String password) => password.length >= 6;
-bool isUsernameValid(String username) => username.length >= 6;
+bool isUsernameValid(String username) => username.length >= 5;
 
 
 

@@ -1,15 +1,27 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:rtc_app/constants/constant.dart';
+import 'package:rtc_app/models/LoginModel.dart';
+import 'package:rtc_app/view/EventsScreen.dart';
+import 'package:rtc_app/view/JobsScreen.dart';
+import 'package:rtc_app/view/KnowYourCompanyScreen.dart';
+import 'package:rtc_app/view/PoliciesScreen.dart';
 import 'package:rtc_app/view/login_screen.dart';
 import 'package:rtc_app/view/profile_screen.dart';
 
 import '../view/categories_screen.dart';
 import '../view/home_screen.dart';
 
-class MyDrawer extends StatelessWidget {
-  const MyDrawer({super.key});
+class MyDrawer extends StatefulWidget {
+  const MyDrawer({super.key, required this.user});
 
+  final LoginModel user;
+
+  @override
+  State<MyDrawer> createState() => _MyDrawerState();
+}
+
+class _MyDrawerState extends State<MyDrawer> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -62,9 +74,7 @@ class MyDrawer extends StatelessWidget {
               ],
             ),
             onTap: () {
-              // Handle AFR menu item click
-              Navigator.pop(context); // Close the drawer
-              // Add your logic here
+              Navigator.pop(context);
             },
           ),
           ListTile(
@@ -78,11 +88,11 @@ class MyDrawer extends StatelessWidget {
               ],
             ),
             onTap: () {
-              // Handle AFR menu item click
               Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return const HomeScreen();
-              })); // Close the drawer
-              // Add your logic here
+                return HomeScreen(
+                  user: widget.user,
+                );
+              }));
             },
           ),
           ListTile(
@@ -96,11 +106,9 @@ class MyDrawer extends StatelessWidget {
               ],
             ),
             onTap: () {
-              // Handle AFR menu item click
               Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return const CategoriesScreen();
-              })); // Close the drawer
-              // Add your logic here
+                return CategoriesScreen(user: widget.user);
+              }));
             },
           ),
           ListTile(
@@ -114,9 +122,7 @@ class MyDrawer extends StatelessWidget {
               ],
             ),
             onTap: () {
-              // Handle AFR menu item click
-              Navigator.pop(context); // Close the drawer
-              // Add your logic here
+              Navigator.pop(context);
             },
           ),
           ListTile(
@@ -130,9 +136,9 @@ class MyDrawer extends StatelessWidget {
               ],
             ),
             onTap: () {
-              // Handle AFR menu item click
-              Navigator.pop(context); // Close the drawer
-              // Add your logic here
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return KnowYourCompanyScreen(user: widget.user);
+              }));
             },
           ),
           ListTile(
@@ -146,9 +152,9 @@ class MyDrawer extends StatelessWidget {
               ],
             ),
             onTap: () {
-              // Handle AFR menu item click
-              Navigator.pop(context); // Close the drawer
-              // Add your logic here
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return PoliciesScreen(user: widget.user);
+              }));
             },
           ),
           ListTile(
@@ -162,9 +168,9 @@ class MyDrawer extends StatelessWidget {
               ],
             ),
             onTap: () {
-              // Handle AFR menu item click
-              Navigator.pop(context); // Close the drawer
-              // Add your logic here
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return JobsScreen(user: widget.user);
+              }));
             },
           ),
           ListTile(
@@ -178,9 +184,7 @@ class MyDrawer extends StatelessWidget {
               ],
             ),
             onTap: () {
-              // Handle AFR menu item click
-              Navigator.pop(context); // Close the drawer
-              // Add your logic here
+              Navigator.pop(context);
             },
           ),
           ListTile(
@@ -194,9 +198,9 @@ class MyDrawer extends StatelessWidget {
               ],
             ),
             onTap: () {
-              // Handle AFR menu item click
-              Navigator.pop(context); // Close the drawer
-              // Add your logic here
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return EventScreen(user: widget.user);
+              }));
             },
           ),
           ListTile(
@@ -212,9 +216,8 @@ class MyDrawer extends StatelessWidget {
             onTap: () {
               // Handle BBC News menu item click
               Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return const ProfileScreen();
+                return ProfileScreen(user: widget.user);
               }));
-              // Add your logic here
             },
           ),
           ListTile(
@@ -228,11 +231,9 @@ class MyDrawer extends StatelessWidget {
               ],
             ),
             onTap: () {
-              // Handle AFR menu item click
               Navigator.push(context, MaterialPageRoute(builder: (context) {
                 return const LoginPage();
-              })); // Close the drawer
-              // Add your logic here
+              }));
             },
           ),
         ],
