@@ -8,6 +8,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:rtc_app/models/news_model.dart';
 
 import '../constants/appbar_default.dart';
+import '../constants/constant.dart';
 import '../constants/drawer_default.dart';
 import '../models/LoginModel.dart';
 import '../repo/news_repository.dart';
@@ -56,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           SizedBox(
-            height: height,
+            height: height / 1.2,
             width: width,
             child: FutureBuilder<List<NewsModel>>(
                 future: api.getCards(widget.user.hRID!),
@@ -119,9 +120,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                         child: CachedNetworkImage(
                                           width: width,
                                           height: height / 4,
-                                          imageUrl:
-                                          context.locale == const Locale('ar') ?   model[index].imageAR.toString() :
-                                          model[index].imageEN!.toString(),
+                                          imageUrl: context.locale ==
+                                                  const Locale('ar')
+                                              ? model[index].imageAR.toString()
+                                              : model[index]
+                                                  .imageEN!
+                                                  .toString(),
                                           fit: BoxFit.cover,
                                           placeholder: (context, url) =>
                                               Container(
@@ -153,8 +157,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                           SizedBox(
                                             width: width * 0.7,
                                             child: Text(
-                                           context.locale.languageCode == 'ar' ?   model[index].headerAR.toString() : model[index].headerEN
-                                               .toString(),
+                                              context.locale.languageCode ==
+                                                      'ar'
+                                                  ? model[index]
+                                                      .headerAR
+                                                      .toString()
+                                                  : model[index]
+                                                      .headerEN
+                                                      .toString(),
                                               maxLines: 3,
                                               overflow: TextOverflow.ellipsis,
                                               style: GoogleFonts.poppins(
@@ -165,28 +175,45 @@ class _HomeScreenState extends State<HomeScreen> {
                                           SizedBox(
                                             width: width * 0.7,
                                             child: Text(
-                                            context.locale.languageCode == 'ar' ?   model[index].detailsAR.toString() : model[index].detailsEN.toString(),
+                                              context.locale.languageCode ==
+                                                      'ar'
+                                                  ? model[index]
+                                                      .detailsAR
+                                                      .toString()
+                                                  : model[index]
+                                                      .detailsEN
+                                                      .toString(),
                                               maxLines: 3,
                                               overflow: TextOverflow.ellipsis,
                                               style: GoogleFonts.poppins(
                                                   fontSize: 17),
                                             ),
                                           ),
-                                           const SizedBox(height: 12,),
-                                           Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                          const SizedBox(
+                                            height: 12,
+                                          ),
+                                          Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceEvenly,
                                               children: [
-                                            InkWell(
-                                              child: const Text("Go To Browser", style: TextStyle(color: Colors.blue , fontSize: 18),),
-                                              onTap: (){},
-                                            ),
-                                            InkWell(
-                                              child: const Text("Download File", style: TextStyle(color: Colors.blue , fontSize: 18)),
-                                              onTap: (){},
-
-                                            ),
-
-                                          ]),
+                                                InkWell(
+                                                  child: const Text(
+                                                    "Go To Browser",
+                                                    style: TextStyle(
+                                                        color: Colors.blue,
+                                                        fontSize: 18),
+                                                  ),
+                                                  onTap: () {},
+                                                ),
+                                                InkWell(
+                                                  child: const Text(
+                                                      "Download File",
+                                                      style: TextStyle(
+                                                          color: Colors.blue,
+                                                          fontSize: 18)),
+                                                  onTap: () {},
+                                                ),
+                                              ]),
                                           const Spacer(),
                                           Row(
                                               mainAxisAlignment:
@@ -272,8 +299,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-
-const spinkit2 = SpinKitFadingCircle(
-  color: Colors.amber,
-  size: 50,
-);

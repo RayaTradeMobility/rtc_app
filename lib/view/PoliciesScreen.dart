@@ -24,7 +24,6 @@ class PoliciesScreen extends StatefulWidget {
   State<PoliciesScreen> createState() => _PoliciesScreenState();
 }
 
-
 class _PoliciesScreenState extends State<PoliciesScreen> {
   NewsRepository api = NewsRepository();
 
@@ -43,12 +42,20 @@ class _PoliciesScreenState extends State<PoliciesScreen> {
       drawer: MyDrawer(user: widget.user),
       body: ListView(
         children: [
-          const Center(child: Text("Policies" , style: TextStyle(fontSize: 30 ,letterSpacing: 4  ,color: MyColorsSample.primaryDark , fontWeight: FontWeight.w900),)),
+          const Center(
+              child: Text(
+            "Policies",
+            style: TextStyle(
+                fontSize: 30,
+                letterSpacing: 4,
+                color: MyColorsSample.primaryDark,
+                fontWeight: FontWeight.w900),
+          )),
           const Divider(
             color: Colors.black,
           ),
           SizedBox(
-            height: height,
+            height: height / 1.2,
             width: width,
             child: FutureBuilder<List<NewsModel>>(
                 future: api.getPoliciesCards(widget.user.hRID!),
@@ -56,9 +63,9 @@ class _PoliciesScreenState extends State<PoliciesScreen> {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(
                         child: SpinKitCircle(
-                          size: 50,
-                          color: Colors.blue,
-                        ));
+                      size: 50,
+                      color: Colors.blue,
+                    ));
                   } else if (snapshot.hasData) {
                     final model = snapshot.data!;
                     return ListView.builder(
@@ -74,23 +81,28 @@ class _PoliciesScreenState extends State<PoliciesScreen> {
                                   width: width * .9,
                                   child: Column(
                                     children: [
-                                      SizedBox(height: height/18,),
+                                      SizedBox(
+                                        height: height / 18,
+                                      ),
                                       ClipRRect(
                                         borderRadius: BorderRadius.circular(20),
                                         child: CachedNetworkImage(
                                           width: width,
                                           height: height / 4,
-                                          imageUrl:
-                                          context.locale == const Locale('ar') ?   model[index].imageAR.toString() :
-                                          model[index].imageEN!.toString(),
+                                          imageUrl: context.locale ==
+                                                  const Locale('ar')
+                                              ? model[index].imageAR.toString()
+                                              : model[index]
+                                                  .imageEN!
+                                                  .toString(),
                                           fit: BoxFit.cover,
                                           placeholder: (context, url) =>
                                               Container(
-                                                child: spinkit2,
-                                              ),
+                                            child: spinkit2,
+                                          ),
                                           errorWidget: (context, url, error) =>
-                                          const Icon(Icons.error_outline,
-                                              color: Colors.red),
+                                              const Icon(Icons.error_outline,
+                                                  color: Colors.red),
                                         ),
                                       ),
                                     ],
@@ -107,15 +119,21 @@ class _PoliciesScreenState extends State<PoliciesScreen> {
                                       height: height * .24,
                                       child: Column(
                                         mainAxisAlignment:
-                                        MainAxisAlignment.end,
+                                            MainAxisAlignment.end,
                                         crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                            CrossAxisAlignment.start,
                                         children: [
                                           SizedBox(
                                             width: width * 0.7,
                                             child: Text(
-                                              context.locale.languageCode == 'ar' ?   model[index].headerAR.toString() : model[index].headerEN
-                                                  .toString(),
+                                              context.locale.languageCode ==
+                                                      'ar'
+                                                  ? model[index]
+                                                      .headerAR
+                                                      .toString()
+                                                  : model[index]
+                                                      .headerEN
+                                                      .toString(),
                                               maxLines: 3,
                                               overflow: TextOverflow.ellipsis,
                                               style: GoogleFonts.poppins(
@@ -126,27 +144,44 @@ class _PoliciesScreenState extends State<PoliciesScreen> {
                                           SizedBox(
                                             width: width * 0.7,
                                             child: Text(
-                                              context.locale.languageCode == 'ar' ?   model[index].detailsAR.toString() : model[index].detailsEN.toString(),
+                                              context.locale.languageCode ==
+                                                      'ar'
+                                                  ? model[index]
+                                                      .detailsAR
+                                                      .toString()
+                                                  : model[index]
+                                                      .detailsEN
+                                                      .toString(),
                                               maxLines: 3,
                                               overflow: TextOverflow.ellipsis,
                                               style: GoogleFonts.poppins(
                                                   fontSize: 17),
                                             ),
                                           ),
-                                          const SizedBox(height: 12,),
+                                          const SizedBox(
+                                            height: 12,
+                                          ),
                                           Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceEvenly,
                                               children: [
                                                 InkWell(
-                                                  child: const Text("Go To Browser", style: TextStyle(color: Colors.blue , fontSize: 18),),
-                                                  onTap: (){},
+                                                  child: const Text(
+                                                    "Go To Browser",
+                                                    style: TextStyle(
+                                                        color: Colors.blue,
+                                                        fontSize: 18),
+                                                  ),
+                                                  onTap: () {},
                                                 ),
                                                 InkWell(
-                                                  child: const Text("Download File", style: TextStyle(color: Colors.blue , fontSize: 18)),
-                                                  onTap: (){},
-
+                                                  child: const Text(
+                                                      "Download File",
+                                                      style: TextStyle(
+                                                          color: Colors.blue,
+                                                          fontSize: 18)),
+                                                  onTap: () {},
                                                 ),
-
                                               ]),
                                           const Spacer(),
                                         ],
@@ -168,16 +203,8 @@ class _PoliciesScreenState extends State<PoliciesScreen> {
                   return Container();
                 }),
           ),
-          const SizedBox(
-            height: 20,
-          ),
         ],
       ),
     );
   }
 }
-
-const spinkit2 = SpinKitFadingCircle(
-  color: Colors.amber,
-  size: 50,
-);

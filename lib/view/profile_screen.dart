@@ -6,7 +6,9 @@ import '../constants/drawer_default.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key, required this.user});
-final LoginModel user;
+
+  final LoginModel user;
+
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
@@ -16,7 +18,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const MyAppBar(),
-      drawer:  MyDrawer(user: widget.user,),
+      drawer: MyDrawer(
+        user: widget.user,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(28.0),
         child: SingleChildScrollView(
@@ -146,7 +150,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ],
               ),
-              ElevatedButton(onPressed: () {}, child: const Text('Change Password')),
+              ElevatedButton(
+                  onPressed: () {}, child: const Text('Change Password')),
             ],
           ),
         ),

@@ -24,8 +24,6 @@ class EventScreen extends StatefulWidget {
   State<EventScreen> createState() => _EventScreenState();
 }
 
-enum FilterList { bbcNews, afr, mode }
-
 class _EventScreenState extends State<EventScreen> {
   NewsRepository api = NewsRepository();
 
@@ -57,7 +55,7 @@ class _EventScreenState extends State<EventScreen> {
             color: Colors.black,
           ),
           SizedBox(
-            height: height,
+            height: height / 1.2,
             width: width,
             child: FutureBuilder<List<NewsModel>>(
                 future: api.getEventCards(widget.user.hRID!),
@@ -189,10 +187,6 @@ class _EventScreenState extends State<EventScreen> {
                                         ],
                                       ),
                                     )),
-                                // Divider(
-                                //   height: height * 0.1,
-                                //   color: Colors.black,
-                                // )
                               ],
                             ),
                           );
@@ -205,16 +199,8 @@ class _EventScreenState extends State<EventScreen> {
                   return Container();
                 }),
           ),
-          const SizedBox(
-            height: 20,
-          ),
         ],
       ),
     );
   }
 }
-
-const spinkit2 = SpinKitFadingCircle(
-  color: Colors.amber,
-  size: 50,
-);

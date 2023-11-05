@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class MyColorsSample {
   static const Color primary = Color(0xFF12376F);
@@ -21,3 +22,8 @@ class MyTextSample {
     return Theme.of(context).textTheme.labelLarge!.copyWith(letterSpacing: 1);
   }
 }
+
+const spinkit2 = SpinKitFadingCircle(
+  color: Colors.amber,
+  size: 50,
+);
