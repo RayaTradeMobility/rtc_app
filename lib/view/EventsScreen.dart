@@ -36,16 +36,17 @@ class _EventScreenState extends State<EventScreen> {
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width * 1;
     final height = MediaQuery.sizeOf(context).height * 1;
+    String namePage = "Events";
 
     return Scaffold(
       appBar: const MyAppBar(),
       drawer: MyDrawer(user: widget.user),
       body: ListView(
         children: [
-          const Center(
+           Center(
               child: Text(
-            "Events",
-            style: TextStyle(
+            namePage,
+            style: const TextStyle(
                 fontSize: 30,
                 letterSpacing: 4,
                 color: MyColorsSample.primaryDark,
@@ -167,7 +168,7 @@ class _EventScreenState extends State<EventScreen> {
                                               children: [
                                                 InkWell(
                                                   child: const Text(
-                                                    "Go To Browser",
+                                                    "Download File 1",
                                                     style: TextStyle(
                                                         color: Colors.blue,
                                                         fontSize: 18),
@@ -176,7 +177,7 @@ class _EventScreenState extends State<EventScreen> {
                                                 ),
                                                 InkWell(
                                                   child: const Text(
-                                                      "Download File",
+                                                      "Download File 2",
                                                       style: TextStyle(
                                                           color: Colors.blue,
                                                           fontSize: 18)),

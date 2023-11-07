@@ -26,7 +26,7 @@ class NewsModel {
   bool? isNotification;
   bool? isNotificationRead;
   int? notReaded;
-  String? complainIdeaStatusID;
+  int? complainIdeaStatusID;
   String? complainIdeaStatusName;
   bool? isSent;
 

@@ -157,6 +157,36 @@ class NewsRepository {
     throw Exception('Error');
   }
 
+  Future<List<NewsModel>> getComplaintsCards(String username) async {
+    String url =
+        'http://www.rayatrade.com/RayaTadePortalAPI/api/Cards/GetCards/4/7';
+
+    final response = await http.get(Uri.parse(url));
+
+    if (kDebugMode) {
+      print(response.body);
+    }
+
+    if (response.statusCode == 200) {
+      final json = jsonDecode(response.body);
+
+      if (json is List) {
+        List<NewsModel> models = [];
+
+        for (var item in json) {
+          final model = NewsModel.fromJson(item);
+          models.add(model);
+        }
+
+        if (models.isNotEmpty) {
+          return models;
+        }
+      }
+    }
+
+    throw Exception('Error');
+  }
+
   Future<CategoriesNewsModel> fetchCategoriesNewsApi(String category) async {
     String url =
         'https://newsapi.org/v2/everything?q=$category&apiKey=227b721271b54f59b37211c4db65df6c';

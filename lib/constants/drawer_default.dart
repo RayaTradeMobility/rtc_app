@@ -9,7 +9,7 @@ import 'package:rtc_app/view/PoliciesScreen.dart';
 import 'package:rtc_app/view/login_screen.dart';
 import 'package:rtc_app/view/profile_screen.dart';
 
-import '../view/categories_screen.dart';
+import '../view/complaints_screen.dart';
 import '../view/home_screen.dart';
 
 class MyDrawer extends StatefulWidget {
@@ -107,7 +107,7 @@ class _MyDrawerState extends State<MyDrawer> {
             ),
             onTap: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return CategoriesScreen(user: widget.user);
+                return ComplaintsScreen(user: widget.user);
               }));
             },
           ),

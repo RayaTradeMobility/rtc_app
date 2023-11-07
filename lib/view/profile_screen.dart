@@ -5,7 +5,7 @@ import '../constants/appbar_default.dart';
 import '../constants/drawer_default.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key, required this.user});
+  const ProfileScreen({Key? key, required this.user}) : super(key: key);
 
   final LoginModel user;
 
@@ -14,6 +14,8 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  bool showPassword = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,57 +53,58 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
                   ),
                   Container(
-                      constraints: BoxConstraints(
-                          maxWidth: MediaQuery.of(context).size.width * 0.6),
-                      child: const Text(
-                        ' Mohamed Osama Mahmoud Ibrahim',
-                        style: TextStyle(fontSize: 18),
-                        maxLines: 2,
-                      ))
+                    constraints: BoxConstraints(
+                        maxWidth: MediaQuery.of(context).size.width * 0.6),
+                    child: Text(
+                      ' ${widget.user.name}',
+                      style: const TextStyle(fontSize: 18),
+                      maxLines: 2,
+                    ),
+                  )
                 ],
               ),
               const Divider(
                 height: 53,
               ),
-              const Row(
+              Row(
                 children: [
-                  Text(
+                  const Text(
                     'Title:',
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
                   ),
                   Text(
-                    ' Software Developer',
-                    style: TextStyle(fontSize: 18),
+                    ' ${widget.user.title}',
+                    style: const TextStyle(fontSize: 18),
                   )
                 ],
               ),
               const Divider(
                 height: 53,
               ),
-              const Row(
+              Row(
                 children: [
-                  Text(
+                  const Text(
                     'Company:',
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
                   ),
                   Text(
-                    ' Raya Trade',
-                    style: TextStyle(fontSize: 18),
+                    ' ${widget.user.company}',
+                    style: const TextStyle(fontSize: 18),
                   )
                 ],
               ),
               const Divider(
                 height: 53,
               ),
-              const Row(
+              Row(
                 children: [
-                  Text(
+                  const Text(
                     'Department:',
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
                   ),
                   Text(
-                    ' Information Technology',
-                    style: TextStyle(fontSize: 18),
+                    ' ${widget.user.department}',
+                    style: const TextStyle(fontSize: 18),
                   )
                 ],
               ),
@@ -123,35 +126,57 @@ class _ProfileScreenState extends State<ProfileScreen> {
               const Divider(
                 height: 53,
               ),
-              const Row(
+              Row(
                 children: [
-                  Text(
+                  const Text(
                     'Email:',
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
                   ),
                   Text(
-                    ' Mohamedosama@rayacorp.com',
-                    style: TextStyle(fontSize: 18),
+                    ' ${widget.user.email}',
+                    style: const TextStyle(fontSize: 18),
                   )
                 ],
               ),
               const Divider(
                 height: 53,
               ),
-              const Row(
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    'Password:',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
+                  Row(
+                    children: [
+                      const Text(
+                        'Password:',
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.w800),
+                      ),
+                      Visibility(
+                        visible: showPassword,
+                        child: Text(
+                          ' ${widget.user.portalPassword}',
+                          style: const TextStyle(fontSize: 18),
+                        ),
+                      ),
+                    ],
                   ),
-                  Text(
-                    ' password',
-                    style: TextStyle(fontSize: 18),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          setState(() {
+                            showPassword = !showPassword;
+                          });
+                        },
+                        child: showPassword
+                            ? const Icon(Icons.visibility)
+                            : const Icon(Icons.visibility_off),
+                      ),
+                    ],
                   ),
                 ],
               ),
-              ElevatedButton(
-                  onPressed: () {}, child: const Text('Change Password')),
             ],
           ),
         ),

@@ -36,16 +36,17 @@ class _PoliciesScreenState extends State<PoliciesScreen> {
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width * 1;
     final height = MediaQuery.sizeOf(context).height * 1;
+    String namePage="Policies";
 
     return Scaffold(
       appBar: const MyAppBar(),
       drawer: MyDrawer(user: widget.user),
       body: ListView(
         children: [
-          const Center(
+           Center(
               child: Text(
-            "Policies",
-            style: TextStyle(
+            namePage,
+            style: const TextStyle(
                 fontSize: 30,
                 letterSpacing: 4,
                 color: MyColorsSample.primaryDark,
@@ -55,7 +56,7 @@ class _PoliciesScreenState extends State<PoliciesScreen> {
             color: Colors.black,
           ),
           SizedBox(
-            height: height / 1.2,
+            height: height / 1.25,
             width: width,
             child: FutureBuilder<List<NewsModel>>(
                 future: api.getPoliciesCards(widget.user.hRID!),

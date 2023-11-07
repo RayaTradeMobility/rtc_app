@@ -36,16 +36,17 @@ class _KnowYourCompanyScreenState extends State<KnowYourCompanyScreen> {
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width * 1;
     final height = MediaQuery.sizeOf(context).height * 1;
+    String namePage = "Know Your Company";
 
     return Scaffold(
       appBar: const MyAppBar(),
       drawer: MyDrawer(user: widget.user),
       body: ListView(
         children: [
-          const Center(
+           Center(
               child: Text(
-            "Know Your Company",
-            style: TextStyle(
+            namePage,
+            style: const TextStyle(
                 fontSize: 30,
                 letterSpacing: 4,
                 color: MyColorsSample.primaryDark,

@@ -1,9 +1,9 @@
-// import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'package:rtc_app/models/LoginModel.dart';
 import 'package:rtc_app/models/news_model.dart';
 import 'package:rtc_app/view/see_more_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -11,69 +11,118 @@ import 'package:url_launcher/url_launcher.dart';
 import '../constants/appbar_default.dart';
 import '../constants/constant.dart';
 import '../constants/drawer_default.dart';
-import '../models/LoginModel.dart';
 import '../repo/news_repository.dart';
+import '../view-model/news_view_model.dart';
+import 'home_screen.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key, required this.user});
-
+class ComplaintsScreen extends StatefulWidget {
+  const ComplaintsScreen({Key? key, required this.user}) : super(key: key);
   final LoginModel user;
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  ComplaintsScreenState createState() => ComplaintsScreenState();
 }
 
-enum FilterList { bbcNews, afr, mode }
-
-class _HomeScreenState extends State<HomeScreen> {
-  TextEditingController commentController = TextEditingController();
-  bool isPressed = false;
-  bool isLiked = false;
-
+class ComplaintsScreenState extends State<ComplaintsScreen> {
+  NewsViewModel newsViewModel = NewsViewModel();
   NewsRepository api = NewsRepository();
+  FilterList? selectedMenu;
+  String namePage = "Complaints";
 
-  @override
-  void initState() {
-    super.initState();
-  }
+  String categoryName = 'View';
+
+  List<String> categoriesList = [
+    'Information',
+    'View',
+    'Submit ',
+  ];
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.sizeOf(context).width * 1;
-    final height = MediaQuery.sizeOf(context).height * 1;
-    String namePage= 'News';
+    final width = MediaQuery.of(context).size.width * 1;
+    final height = MediaQuery.of(context).size.height * 1;
 
     return Scaffold(
       appBar: const MyAppBar(),
       drawer: MyDrawer(user: widget.user),
-      body: ListView(
+      body: Column(
         children: [
-          const SizedBox(
-            height: 10,
-          ),
           Center(
-            child: Text(
-              'RAYA HR SYSTEM',
-              style: GoogleFonts.poppins(
-                fontSize: 20,
-                color: Colors.blue[800],
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+              child: Text(
+            namePage,
+            style: const TextStyle(
+                fontSize: 30,
+                letterSpacing: 4,
+                color: MyColorsSample.primaryDark,
+                fontWeight: FontWeight.w900),
+          )),
+          const Divider(
+            color: Colors.black,
           ),
           SizedBox(
-            height: height / 1.2,
-            width: width,
+            height: 50,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: categoriesList.length,
+              itemBuilder: (context, index) {
+                return InkWell(
+                  onTap: () {
+                    setState(() {
+                      categoryName = categoriesList[index];
+                    });
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 12),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: categoryName == categoriesList[index]
+                            ? Colors.blue
+                            : Colors.grey,
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 32),
+                        child: Center(
+                          child: Text(
+                            categoriesList[index].toString(),
+                            style: GoogleFonts.poppins(
+                              fontSize: 13,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Expanded(
             child: FutureBuilder<List<NewsModel>>(
-                future: api.getCards(widget.user.hRID!),
-                builder: (BuildContext context, snapshot) {
-                    if (snapshot.hasData) {
-                    final model = snapshot.data!;
+              future: api.getComplaintsCards(widget.user.hRID!),
+              builder: (BuildContext context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: SpinKitCircle(
+                      size: 50,
+                      color: Colors.blue,
+                    ),
+                  );
+                } else if (snapshot.hasError) {
+                  return const Center(
+                    child: Text('Error occurred while fetching data.'),
+                  );
+                } else {
+                  final model = snapshot.data!;
+                  if (categoryName == "View") {
                     return ListView.builder(
                         itemCount: model.length,
                         scrollDirection: Axis.vertical,
                         itemBuilder: (context, index) {
-
                           return SizedBox(
                             child: Column(
                               children: [
@@ -101,7 +150,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               width: 14,
                                             ),
                                             Text(
-                                              model[index].createdBY!,
+                                              model[index].createdBY ?? "HR",
                                               style: const TextStyle(
                                                   fontWeight: FontWeight.w900,
                                                   fontSize: 20),
@@ -120,12 +169,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                         child: CachedNetworkImage(
                                           width: width,
                                           height: height / 4,
-                                          imageUrl: context.locale ==
-                                                  const Locale('ar')
-                                              ? model[index].imageAR.toString()
-                                              : model[index]
-                                                  .imageEN!
-                                                  .toString(),
+                                          imageUrl:
+                                              model[index].imageEN.toString(),
                                           fit: BoxFit.cover,
                                           placeholder: (context, url) =>
                                               Container(
@@ -158,9 +203,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                             width: width * 0.7,
                                             child: Container(
                                               constraints: BoxConstraints(
-                                                maxWidth: width/3,
-                                                maxHeight: height/14
-                                              ),
+                                                  maxWidth: width / 3,
+                                                  maxHeight: height / 14),
                                               child: Text(
                                                 context.locale.languageCode ==
                                                         'ar'
@@ -174,22 +218,18 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 overflow: TextOverflow.ellipsis,
                                                 style: GoogleFonts.poppins(
                                                     fontSize: 19,
-                                                    fontWeight: FontWeight.w600),
+                                                    fontWeight:
+                                                        FontWeight.w600),
                                               ),
                                             ),
                                           ),
                                           SizedBox(
                                             width: width * 0.7,
-
                                             child: Container(
                                               constraints: BoxConstraints(
-
-                                                      maxWidth: width/3,
-                                                  maxHeight: height/16
-
-                                              ),
+                                                  maxWidth: width / 3,
+                                                  maxHeight: height / 16),
                                               child: Text(
-
                                                 context.locale.languageCode ==
                                                         'ar'
                                                     ? model[index]
@@ -220,10 +260,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         fontSize: 18),
                                                   ),
                                                   onTap: () async {
-                                                     String? url = model[index].browserLink!;
+                                                    String? url = model[index]
+                                                        .browserLink!;
 
-                                                     if (await canLaunchUrl(Uri.parse(url))) {
-                                                      await launchUrl(Uri.parse(url));
+                                                    if (await canLaunchUrl(
+                                                        Uri.parse(url))) {
+                                                      await launchUrl(
+                                                          Uri.parse(url));
                                                     } else {
                                                       throw 'Could not launch $url';
                                                     }
@@ -238,57 +281,18 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   onTap: () {},
                                                 ),
                                               ]),
-                                          const Divider(height: 6,color: Colors.black,),
+                                          const Divider(
+                                            height: 6,
+                                            color: Colors.black,
+                                          ),
                                           const Spacer(),
                                           Row(
                                               mainAxisAlignment:
                                                   MainAxisAlignment.spaceEvenly,
                                               children: [
-                                                InkWell(
-                                                  onTap: () {
-                                                    setState(() {
-                                                      isLiked = !isLiked;
-                                                    });
-                                                  },
-                                                  child: Container(
-                                                    decoration: BoxDecoration(
-
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8),
-                                                    ),
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            12),
-                                                    child:  Row(
-                                                      mainAxisSize:
-                                                          MainAxisSize.min,
-                                                      children: [
-                                                        Icon(
-                                                          Icons.thumb_up,
-                                                          color: isLiked ? Colors.black : Colors.blue,
-                                                        ),
-                                                        const SizedBox(width: 9),
-                                                        Text(
-                                                          'Like',
-                                                          style: TextStyle(
-                                                            color: isLiked ? Colors.black : Colors.blue,
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ),
-                                                // SizedBox(
-                                                //   width: width * 0.3,
-                                                // ),
-                                                InkWell(
-                                                    onTap: () {
-                                                      setState(() {
-                                                        isPressed =true;
-
-                                                      });
-
+                                                ElevatedButton(
+                                                    onPressed: () {
+                                                      setState(() {});
                                                     },
                                                     child: const Row(
                                                       // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -300,24 +304,24 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         Text('Comment'),
                                                       ],
                                                     )),
-                                                 InkWell(
-                                                  onTap:() {
-                                                    Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                                InkWell(
+                                                  onTap: () {
+                                                    Navigator.push(context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) {
                                                       return SeeMorePage(
-                                                        namePage: namePage, model: model[index],
+                                                        namePage: namePage,
+                                                        model: model[index],
                                                       );
                                                     }));
-
                                                   },
-                                                  child:
-                                                const Row(
-                                                  children: [
-                                                    Icon(Icons.list_outlined),
-
-                                                    Text("See More"),
-                                                  ],
-                                                ),),
-
+                                                  child: const Row(
+                                                    children: [
+                                                      Icon(Icons.list_outlined),
+                                                      Text("See More"),
+                                                    ],
+                                                  ),
+                                                ),
                                               ])
                                         ],
                                       ),
@@ -326,21 +330,28 @@ class _HomeScreenState extends State<HomeScreen> {
                                   height: height * 0.1,
                                   color: Colors.black,
                                 ),
-
                               ],
                             ),
                           );
                         });
-                  } else if (snapshot.hasError) {
-                    const SizedBox(
-                      child: Center(child: Text("has Error")),
+                  } else if (categoryName == "Information") {
+                    return Container(
+                      width: width/1.1,
+                      height: height/1.2,
+                      color: Colors.grey.withOpacity(0.2),
+
+                      child: Stack(
+                        children: [Positioned(left:20,top: 20,
+                            child: Container(width: width/1.7, height: height/3,color: Colors.red,))],
+                      ),
                     );
                   }
-                  return Container();
-                }),
-          ),
-          const SizedBox(
-            height: 20,
+                  {
+                    return Container();
+                  }
+                }
+              },
+            ),
           ),
         ],
       ),

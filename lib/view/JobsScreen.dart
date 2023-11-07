@@ -26,6 +26,7 @@ class JobsScreen extends StatefulWidget {
 
 class _JobsScreenState extends State<JobsScreen> {
   NewsRepository api = NewsRepository();
+  String namePage="Jobs";
 
   @override
   void initState() {
@@ -42,10 +43,10 @@ class _JobsScreenState extends State<JobsScreen> {
       drawer: MyDrawer(user: widget.user),
       body: ListView(
         children: [
-          const Center(
+           Center(
               child: Text(
-            "Jobs",
-            style: TextStyle(
+            namePage,
+            style: const TextStyle(
                 fontSize: 30,
                 letterSpacing: 4,
                 color: MyColorsSample.primaryDark,
