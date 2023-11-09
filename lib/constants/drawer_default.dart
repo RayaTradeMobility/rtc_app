@@ -2,10 +2,10 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:rtc_app/constants/constant.dart';
 import 'package:rtc_app/models/LoginModel.dart';
-import 'package:rtc_app/view/EventsScreen.dart';
-import 'package:rtc_app/view/JobsScreen.dart';
-import 'package:rtc_app/view/KnowYourCompanyScreen.dart';
-import 'package:rtc_app/view/PoliciesScreen.dart';
+import 'package:rtc_app/view/event_screen.dart';
+import 'package:rtc_app/view/job_screen.dart';
+import 'package:rtc_app/view/know_your_company.dart';
+import 'package:rtc_app/view/policies_screen.dart';
 import 'package:rtc_app/view/login_screen.dart';
 import 'package:rtc_app/view/profile_screen.dart';
 

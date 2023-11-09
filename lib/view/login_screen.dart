@@ -24,21 +24,24 @@ class LoginPage extends StatefulWidget {
 
 class LoginPageState extends State<LoginPage> {
   bool isLoading = false;
+  final _formKey = GlobalKey<FormState>();
+  final _formKey1 = GlobalKey<FormState>();
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  bool passwordVisibility = true;
+  API api = API();
+
+  @override
+  void initState() {
+    _loadUserEmailPassword();
+    super.initState();
+  }
 
   void _toggleDarkMode(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
     final newMode =
         themeProvider.mode == ThemeMode.dark ? ThemeMode.light : ThemeMode.dark;
     themeProvider.setMode(newMode);
-  }
-
-  final _formKey = GlobalKey<FormState>();
-  final _formKey1 = GlobalKey<FormState>();
-
-  @override
-  void initState() {
-    _loadUserEmailPassword();
-    super.initState();
   }
 
   void _loadUserEmailPassword() async {
@@ -58,12 +61,6 @@ class LoginPageState extends State<LoginPage> {
       }
     }
   }
-
-  TextEditingController usernameController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-
-  bool passwordVisibility = true;
-  API api = API();
 
   @override
   Widget build(BuildContext context) {

@@ -1,5 +1,3 @@
-// import 'package:cached_network_image/cached_network_image.dart';
-// ignore_for_file: file_names
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -15,16 +13,16 @@ import '../constants/drawer_default.dart';
 import '../models/LoginModel.dart';
 import '../repo/news_repository.dart';
 
-class PoliciesScreen extends StatefulWidget {
-  const PoliciesScreen({super.key, required this.user});
+class KnowYourCompanyScreen extends StatefulWidget {
+  const KnowYourCompanyScreen({super.key, required this.user});
 
   final LoginModel user;
 
   @override
-  State<PoliciesScreen> createState() => _PoliciesScreenState();
+  State<KnowYourCompanyScreen> createState() => _KnowYourCompanyScreenState();
 }
 
-class _PoliciesScreenState extends State<PoliciesScreen> {
+class _KnowYourCompanyScreenState extends State<KnowYourCompanyScreen> {
   NewsRepository api = NewsRepository();
 
   @override
@@ -36,7 +34,7 @@ class _PoliciesScreenState extends State<PoliciesScreen> {
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width * 1;
     final height = MediaQuery.sizeOf(context).height * 1;
-    String namePage="Policies";
+    String namePage = "Know Your Company";
 
     return Scaffold(
       appBar: const MyAppBar(),
@@ -56,10 +54,10 @@ class _PoliciesScreenState extends State<PoliciesScreen> {
             color: Colors.black,
           ),
           SizedBox(
-            height: height / 1.25,
+            height: height / 1.2,
             width: width,
             child: FutureBuilder<List<NewsModel>>(
-                future: api.getPoliciesCards(widget.user.hRID!),
+                future: api.getKYCCards(widget.user.hRID!),
                 builder: (BuildContext context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(
@@ -188,10 +186,6 @@ class _PoliciesScreenState extends State<PoliciesScreen> {
                                         ],
                                       ),
                                     )),
-                                // Divider(
-                                //   height: height * 0.1,
-                                //   color: Colors.black,
-                                // )
                               ],
                             ),
                           );

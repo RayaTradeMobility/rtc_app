@@ -1,5 +1,3 @@
-// import 'package:cached_network_image/cached_network_image.dart';
-// ignore_for_file: file_names
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -9,25 +7,23 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:rtc_app/constants/constant.dart';
 import 'package:rtc_app/models/news_model.dart';
-import 'package:rtc_app/view/see_more_screen.dart';
 
 import '../constants/appbar_default.dart';
 import '../constants/drawer_default.dart';
 import '../models/LoginModel.dart';
 import '../repo/news_repository.dart';
 
-class JobsScreen extends StatefulWidget {
-  const JobsScreen({super.key, required this.user});
+class PoliciesScreen extends StatefulWidget {
+  const PoliciesScreen({super.key, required this.user});
 
   final LoginModel user;
 
   @override
-  State<JobsScreen> createState() => _JobsScreenState();
+  State<PoliciesScreen> createState() => _PoliciesScreenState();
 }
 
-class _JobsScreenState extends State<JobsScreen> {
+class _PoliciesScreenState extends State<PoliciesScreen> {
   NewsRepository api = NewsRepository();
-  String namePage = "Jobs";
 
   @override
   void initState() {
@@ -38,13 +34,14 @@ class _JobsScreenState extends State<JobsScreen> {
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width * 1;
     final height = MediaQuery.sizeOf(context).height * 1;
+    String namePage="Policies";
 
     return Scaffold(
       appBar: const MyAppBar(),
       drawer: MyDrawer(user: widget.user),
       body: ListView(
         children: [
-          Center(
+           Center(
               child: Text(
             namePage,
             style: const TextStyle(
@@ -57,10 +54,10 @@ class _JobsScreenState extends State<JobsScreen> {
             color: Colors.black,
           ),
           SizedBox(
-            height: height / 1.2,
+            height: height / 1.25,
             width: width,
             child: FutureBuilder<List<NewsModel>>(
-                future: api.getJobsCards(widget.user.hRID!),
+                future: api.getPoliciesCards(widget.user.hRID!),
                 builder: (BuildContext context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(
@@ -118,7 +115,7 @@ class _JobsScreenState extends State<JobsScreen> {
                                     child: Container(
                                       alignment: Alignment.bottomCenter,
                                       padding: const EdgeInsets.all(15),
-                                      height: height * .28,
+                                      height: height * .24,
                                       child: Column(
                                         mainAxisAlignment:
                                             MainAxisAlignment.end,
@@ -169,7 +166,7 @@ class _JobsScreenState extends State<JobsScreen> {
                                               children: [
                                                 InkWell(
                                                   child: const Text(
-                                                    "Download File 1",
+                                                    "Go To Browser",
                                                     style: TextStyle(
                                                         color: Colors.blue,
                                                         fontSize: 18),
@@ -178,7 +175,7 @@ class _JobsScreenState extends State<JobsScreen> {
                                                 ),
                                                 InkWell(
                                                   child: const Text(
-                                                      "Download File 2",
+                                                      "Download File",
                                                       style: TextStyle(
                                                           color: Colors.blue,
                                                           fontSize: 18)),
@@ -186,49 +183,6 @@ class _JobsScreenState extends State<JobsScreen> {
                                                 ),
                                               ]),
                                           const Spacer(),
-                                          const Divider(
-                                            height: 2,
-                                            color: Colors.black,
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 29.0, right: 32),
-                                            child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  const Row(
-                                                    children: [
-                                                      Icon(Icons.done),
-                                                      SizedBox(
-                                                        width: 9,
-                                                      ),
-                                                      Text('Apply'),
-                                                    ],
-                                                  ),
-                                                  InkWell(
-                                                    onTap: () {
-                                                      Navigator.push(context,
-                                                          MaterialPageRoute(
-                                                              builder:
-                                                                  (context) {
-                                                        return SeeMorePage(
-                                                          namePage: namePage,
-                                                          model: model[index],
-                                                        );
-                                                      }));
-                                                    },
-                                                    child: const Row(
-                                                      children: [
-                                                        Icon(Icons
-                                                            .list_outlined),
-                                                        Text(" See More"),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ]),
-                                          )
                                         ],
                                       ),
                                     )),

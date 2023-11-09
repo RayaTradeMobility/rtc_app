@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:rtc_app/constants/CardItem.dart';
+import 'package:rtc_app/constants/card_view.dart';
 import 'package:rtc_app/models/news_model.dart';
 import '../constants/appbar_default.dart';
 import '../constants/drawer_default.dart';
@@ -63,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         scrollDirection: Axis.vertical,
                         itemBuilder: (context, index) {
                           return CardItem(
-                              model: model, index: index, namePage: namePage);
+                              model: model, index: index, namePage: namePage, liked: true, comment: true, seeMoreBool: true,);
                         });
                   } else if (snapshot.hasError) {
                     const SizedBox(

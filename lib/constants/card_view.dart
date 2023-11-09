@@ -1,5 +1,3 @@
-// ignore_for_file: file_names
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -17,11 +15,15 @@ class CardItem extends StatefulWidget {
       {super.key,
       required this.model,
       required this.namePage,
-      required this.index});
+      required this.index,
+      required this.liked,
+      required this.comment,
+      required this.seeMoreBool});
 
   final List<NewsModel> model;
   final String namePage;
   final int index;
+  final bool liked, comment, seeMoreBool;
 
   @override
   State<CardItem> createState() => _CardItemState();
@@ -95,7 +97,8 @@ class _CardItemState extends State<CardItem> {
                                   height: height / 4,
                                   imageUrl: context.locale == const Locale('ar')
                                       ? widget.model[widget.index].imageAR!
-                                      : widget.model[widget.index].imageEN!,
+                                      : widget.model[widget.index].imageEN ??
+                                          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTULSPiQKGEcCtCxrkr4t9Ub8U-Jwzv3kXu2RMOzQoihg&s",
                                   fit: BoxFit.cover,
                                   placeholder: (context, url) => Container(
                                     child: spinkit2,
@@ -206,75 +209,86 @@ class _CardItemState extends State<CardItem> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceEvenly,
                                     children: [
-                                      InkWell(
-                                        onTap: () {
-                                          setState(() {
-                                            isLikedList[widget.index] =
-                                                !isLikedList[widget.index];
-                                          });
-                                        },
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                          ),
-                                          padding: const EdgeInsets.all(12),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              Icon(
-                                                Icons.thumb_up,
-                                                color: isLikedList[widget.index]
-                                                    ? Colors.black
-                                                    : Colors.blue,
-                                              ),
-                                              const SizedBox(width: 9),
-                                              Text(
-                                                'Like',
-                                                style: TextStyle(
-                                                  color:
-                                                      isLikedList[widget.index]
+                                      widget.liked
+                                          ? InkWell(
+                                              onTap: () {
+                                                setState(() {
+                                                  isLikedList[widget.index] =
+                                                      !isLikedList[
+                                                          widget.index];
+                                                });
+                                              },
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                ),
+                                                padding:
+                                                    const EdgeInsets.all(12),
+                                                child: Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  children: [
+                                                    Icon(
+                                                      Icons.thumb_up,
+                                                      color: isLikedList[
+                                                              widget.index]
                                                           ? Colors.black
                                                           : Colors.blue,
+                                                    ),
+                                                    const SizedBox(width: 9),
+                                                    Text(
+                                                      'Like',
+                                                      style: TextStyle(
+                                                        color: isLikedList[
+                                                                widget.index]
+                                                            ? Colors.black
+                                                            : Colors.blue,
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
                                               ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                      InkWell(
-                                          onTap: () {
-                                            setState(() {
-                                              isPressed = true;
-                                            });
-                                          },
-                                          child: const Row(
-                                            children: [
-                                              Icon(Icons.comment),
-                                              SizedBox(
-                                                width: 9,
+                                            )
+                                          : Container(),
+                                      widget.comment
+                                          ? InkWell(
+                                              onTap: () {
+                                                setState(() {
+                                                  isPressed = true;
+                                                });
+                                              },
+                                              child: const Row(
+                                                children: [
+                                                  Icon(Icons.comment),
+                                                  SizedBox(
+                                                    width: 9,
+                                                  ),
+                                                  Text('Comment'),
+                                                ],
+                                              ))
+                                          : Container(),
+                                      widget.seeMoreBool
+                                          ? InkWell(
+                                              onTap: () {
+                                                Navigator.push(context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) {
+                                                  return SeeMorePage(
+                                                    namePage: widget.namePage,
+                                                    model: widget
+                                                        .model[widget.index],
+                                                  );
+                                                }));
+                                              },
+                                              child: const Row(
+                                                children: [
+                                                  Icon(Icons.list_outlined),
+                                                  Text("See More"),
+                                                ],
                                               ),
-                                              Text('Comment'),
-                                            ],
-                                          )),
-                                      InkWell(
-                                        onTap: () {
-                                          Navigator.push(context,
-                                              MaterialPageRoute(
-                                                  builder: (context) {
-                                            return SeeMorePage(
-                                              namePage: widget.namePage,
-                                              model: widget.model[widget.index],
-                                            );
-                                          }));
-                                        },
-                                        child: const Row(
-                                          children: [
-                                            Icon(Icons.list_outlined),
-                                            Text("See More"),
-                                          ],
-                                        ),
-                                      ),
+                                            )
+                                          : Container(),
                                     ]),
                                 isPressed == true
                                     ? CommentBox(

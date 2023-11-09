@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:rtc_app/constants/card_submit.dart';
 import 'package:rtc_app/models/LoginModel.dart';
 import 'package:rtc_app/models/news_model.dart';
 
-import '../constants/CardItem.dart';
+import '../constants/card_information.dart';
+import '../constants/card_view.dart';
 import '../constants/appbar_default.dart';
 import '../constants/constant.dart';
 import '../constants/drawer_default.dart';
@@ -36,9 +37,6 @@ class ComplaintsScreenState extends State<ComplaintsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width * 1;
-    final height = MediaQuery.of(context).size.height * 1;
-
     return Scaffold(
       appBar: const MyAppBar(),
       drawer: MyDrawer(user: widget.user),
@@ -102,14 +100,7 @@ class ComplaintsScreenState extends State<ComplaintsScreen> {
             child: FutureBuilder<List<NewsModel>>(
               future: api.getComplaintsCards(widget.user.hRID!),
               builder: (BuildContext context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(
-                    child: SpinKitCircle(
-                      size: 50,
-                      color: Colors.blue,
-                    ),
-                  );
-                } else if (snapshot.hasError) {
+                if (snapshot.hasError) {
                   return const Center(
                     child: Text('Error occurred while fetching data.'),
                   );
@@ -121,74 +112,19 @@ class ComplaintsScreenState extends State<ComplaintsScreen> {
                         scrollDirection: Axis.vertical,
                         itemBuilder: (context, index) {
                           return CardItem(
-                              model: model, index: index, namePage: namePage);
+                            model: model,
+                            index: index,
+                            namePage: namePage,
+                            liked: false,
+                            comment: true,
+                            seeMoreBool: false,
+                          );
                         });
                   } else if (categoryName == "Information") {
-                    return Container(
-                      width: width / 1.1,
-                      height: height / 1.2,
-                      color: Colors.grey.withOpacity(0.2),
-                      child: Stack(
-                        children: [
-                          Positioned(
-                              left: 20,
-                              top: 20,
-                              child: Container(
-                                width: width / 1.7,
-                                height: height / 3,
-                                color: Colors.red,
-                              ))
-                        ],
-                      ),
-                    );
+                    return const MyCard();
                   }
                   {
-                    return Card(
-                      child: SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            Container(
-                              color: Colors.grey,
-                              height: 120,
-                              child: TextFormField(
-                                decoration:
-                                    const InputDecoration(hintText: "Title*"),
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            Container(
-                              color: Colors.grey,
-                              height: 300,
-                              child: Column(
-                                children: [
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  const Expanded(
-                                    child: TextField(
-                                      decoration: InputDecoration(
-                                          labelText: 'Enter Message'),
-                                      keyboardType: TextInputType.multiline,
-                                      maxLines: null,
-                                      expands: true, // <-- SEE HERE
-                                    ),
-                                  ),
-                                  ElevatedButton(
-                                    onPressed: () {},
-                                    child: const Text(
-                                      'Send',
-                                      style: TextStyle(fontSize: 24),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
+                    return const SubmitCard();
                   }
                 }
               },
