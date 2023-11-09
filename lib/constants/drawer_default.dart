@@ -88,11 +88,12 @@ class _MyDrawerState extends State<MyDrawer> {
               ],
             ),
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
+              Navigator.pushAndRemoveUntil(context,
+                  MaterialPageRoute(builder: (context) {
                 return HomeScreen(
                   user: widget.user,
                 );
-              }));
+              }), (route) => false);
             },
           ),
           ListTile(
@@ -231,9 +232,10 @@ class _MyDrawerState extends State<MyDrawer> {
               ],
             ),
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
+              Navigator.pushAndRemoveUntil(context,
+                  MaterialPageRoute(builder: (context) {
                 return const LoginPage();
-              }));
+              }), (route) => false);
             },
           ),
         ],

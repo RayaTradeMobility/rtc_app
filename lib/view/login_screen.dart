@@ -2,6 +2,7 @@
 
 import 'package:animate_do/animate_do.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -9,6 +10,7 @@ import 'package:provider/provider.dart';
 import 'package:rtc_app/constants/constant.dart';
 import 'package:rtc_app/models/LoginModel.dart';
 import 'package:rtc_app/view/home_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../API Online/API.dart';
 import '../constants/provider.dart';
@@ -21,23 +23,48 @@ class LoginPage extends StatefulWidget {
 }
 
 class LoginPageState extends State<LoginPage> {
-  bool isLoading=false;
+  bool isLoading = false;
+
   void _toggleDarkMode(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
     final newMode =
         themeProvider.mode == ThemeMode.dark ? ThemeMode.light : ThemeMode.dark;
     themeProvider.setMode(newMode);
-
   }
+
   final _formKey = GlobalKey<FormState>();
   final _formKey1 = GlobalKey<FormState>();
 
+  @override
+  void initState() {
+    _loadUserEmailPassword();
+    super.initState();
+  }
+
+  void _loadUserEmailPassword() async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      var email = prefs.getString("username") ?? "";
+      var passWord = prefs.getString("password") ?? "";
+      if (kDebugMode) {
+        print(email);
+        print(passwordController);
+      }
+      usernameController.text = email;
+      passwordController.text = passWord;
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
+  }
 
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
   bool passwordVisibility = true;
-API api = API();
+  API api = API();
+
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -238,13 +265,14 @@ API api = API();
                                   decoration: InputDecoration(
                                       border: InputBorder.none,
                                       hintText: tr("Username"),
-                                      hintStyle:
-                                          TextStyle(color: Colors.grey.shade700)),
+                                      hintStyle: TextStyle(
+                                          color: Colors.grey.shade700)),
                                 ),
                               ),
-
                             ),
-                            const SizedBox(height: 10,),
+                            const SizedBox(
+                              height: 10,
+                            ),
                             Container(
                               padding: const EdgeInsets.all(10),
                               child: Form(
@@ -259,7 +287,6 @@ API api = API();
                                   },
                                   controller: passwordController,
                                   obscureText: passwordVisibility,
-
                                   decoration: InputDecoration(
                                       suffixIcon: IconButton(
                                         icon: Icon(
@@ -267,19 +294,20 @@ API api = API();
                                           passwordVisibility
                                               ? Icons.visibility
                                               : Icons.visibility_off,
-                                          color: Theme.of(context).primaryColorDark,
+                                          color: Theme.of(context)
+                                              .primaryColorDark,
                                         ),
                                         onPressed: () {
                                           setState(() {
-                                            passwordVisibility = !passwordVisibility;
+                                            passwordVisibility =
+                                                !passwordVisibility;
                                           });
                                         },
                                       ),
-
                                       border: InputBorder.none,
                                       hintText: tr("Password"),
-                                      hintStyle:
-                                          TextStyle(color: Colors.grey.shade700)),
+                                      hintStyle: TextStyle(
+                                          color: Colors.grey.shade700)),
                                 ),
                               ),
                             )
@@ -295,11 +323,12 @@ API api = API();
                   FadeInUp(
                       duration: const Duration(milliseconds: 1900),
                       child: MaterialButton(
-                        onPressed: () async{
+                        onPressed: () async {
                           setState(() {
                             isLoading = true;
                           });
-                          if (_formKey.currentState!.validate() && _formKey1.currentState!.validate()) {
+                          if (_formKey.currentState!.validate() &&
+                              _formKey1.currentState!.validate()) {
                             LoginModel user = await api.login(
                                 usernameController.text,
                                 passwordController.text);
@@ -311,11 +340,10 @@ API api = API();
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) =>  HomeScreen(user:user),
+                                  builder: (context) => HomeScreen(user: user),
                                 ),
                               );
-                            }
-                            else {
+                            } else {
                               setState(() {
                                 isLoading = false;
                               });
@@ -329,8 +357,7 @@ API api = API();
                                 fontSize: 16.0,
                               );
                             }
-                          }
-                          else {
+                          } else {
                             setState(() {
                               isLoading = false;
                             });
@@ -342,15 +369,15 @@ API api = API();
                         ),
                         height: 50,
                         child: Center(
-                          child:isLoading ?const SpinKitChasingDots(
-                            size: 18  ,
-                            color: Colors.blue,
-                          ) : Text(
-
-                            tr("Login"),
-                            style: const TextStyle(color: Colors.white),
-                          )
-                        ),
+                            child: isLoading
+                                ? const SpinKitChasingDots(
+                                    size: 18,
+                                    color: Colors.blue,
+                                  )
+                                : Text(
+                                    tr("Login"),
+                                    style: const TextStyle(color: Colors.white),
+                                  )),
                       )),
                   const SizedBox(
                     height: 30,
@@ -364,8 +391,7 @@ API api = API();
     );
   }
 }
+
 bool isPasswordValid(String password) => password.length >= 6;
+
 bool isUsernameValid(String username) => username.length >= 5;
-
-
-

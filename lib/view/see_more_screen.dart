@@ -34,18 +34,20 @@ class _SeeMorePageState extends State<SeeMorePage> {
         Column(
           children: [
             SizedBox(
-              height: height / 1.2,
+              height: height / 1,
               width: width,
               child: ListView.builder(
                   itemCount: 1,
                   scrollDirection: Axis.vertical,
                   itemBuilder: (context, index) {
                     return SizedBox(
+                      // height: height * 0.82,
+                      // width: width * .9,
                       child: Column(
                         children: [
                           Container(
                             color: Colors.transparent,
-                            height: height * 0.32,
+                            height: height * 0.42,
                             width: width * .9,
                             child: Column(
                               children: [
@@ -109,7 +111,7 @@ class _SeeMorePageState extends State<SeeMorePage> {
                               child: Container(
                                 alignment: Alignment.bottomCenter,
                                 padding: const EdgeInsets.all(15),
-                                height: height * .15,
+                                height: height * .25,
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -157,7 +159,11 @@ class _SeeMorePageState extends State<SeeMorePage> {
                                     child: const Row(
                                       children: [
                                         Icon(Icons.comment),
-                                        Text(" Comment", style: TextStyle(fontWeight: FontWeight.w700),),
+                                        Text(
+                                          " Comment",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w700),
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -165,7 +171,7 @@ class _SeeMorePageState extends State<SeeMorePage> {
                               : Container(),
                           isPressed == true
                               ? Padding(
-                                  padding: EdgeInsets.only(top: height / 3.6),
+                                  padding: EdgeInsets.only(top: height / 7.6),
                                   child: CommentBox(
                                     controller: commentController,
                                     inputRadius: BorderRadius.circular(20),

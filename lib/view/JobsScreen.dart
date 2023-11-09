@@ -9,6 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:rtc_app/constants/constant.dart';
 import 'package:rtc_app/models/news_model.dart';
+import 'package:rtc_app/view/see_more_screen.dart';
 
 import '../constants/appbar_default.dart';
 import '../constants/drawer_default.dart';
@@ -26,7 +27,7 @@ class JobsScreen extends StatefulWidget {
 
 class _JobsScreenState extends State<JobsScreen> {
   NewsRepository api = NewsRepository();
-  String namePage="Jobs";
+  String namePage = "Jobs";
 
   @override
   void initState() {
@@ -43,7 +44,7 @@ class _JobsScreenState extends State<JobsScreen> {
       drawer: MyDrawer(user: widget.user),
       body: ListView(
         children: [
-           Center(
+          Center(
               child: Text(
             namePage,
             style: const TextStyle(
@@ -117,7 +118,7 @@ class _JobsScreenState extends State<JobsScreen> {
                                     child: Container(
                                       alignment: Alignment.bottomCenter,
                                       padding: const EdgeInsets.all(15),
-                                      height: height * .24,
+                                      height: height * .28,
                                       child: Column(
                                         mainAxisAlignment:
                                             MainAxisAlignment.end,
@@ -168,7 +169,7 @@ class _JobsScreenState extends State<JobsScreen> {
                                               children: [
                                                 InkWell(
                                                   child: const Text(
-                                                    "Go To Browser",
+                                                    "Download File 1",
                                                     style: TextStyle(
                                                         color: Colors.blue,
                                                         fontSize: 18),
@@ -177,7 +178,7 @@ class _JobsScreenState extends State<JobsScreen> {
                                                 ),
                                                 InkWell(
                                                   child: const Text(
-                                                      "Download File",
+                                                      "Download File 2",
                                                       style: TextStyle(
                                                           color: Colors.blue,
                                                           fontSize: 18)),
@@ -185,6 +186,49 @@ class _JobsScreenState extends State<JobsScreen> {
                                                 ),
                                               ]),
                                           const Spacer(),
+                                          const Divider(
+                                            height: 2,
+                                            color: Colors.black,
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 29.0, right: 32),
+                                            child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  const Row(
+                                                    children: [
+                                                      Icon(Icons.done),
+                                                      SizedBox(
+                                                        width: 9,
+                                                      ),
+                                                      Text('Apply'),
+                                                    ],
+                                                  ),
+                                                  InkWell(
+                                                    onTap: () {
+                                                      Navigator.push(context,
+                                                          MaterialPageRoute(
+                                                              builder:
+                                                                  (context) {
+                                                        return SeeMorePage(
+                                                          namePage: namePage,
+                                                          model: model[index],
+                                                        );
+                                                      }));
+                                                    },
+                                                    child: const Row(
+                                                      children: [
+                                                        Icon(Icons
+                                                            .list_outlined),
+                                                        Text(" See More"),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ]),
+                                          )
                                         ],
                                       ),
                                     )),
