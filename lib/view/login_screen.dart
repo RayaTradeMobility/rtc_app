@@ -9,10 +9,10 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:rtc_app/constants/constant.dart';
 import 'package:rtc_app/models/LoginModel.dart';
-import 'package:rtc_app/view/home_screen.dart';
+import 'package:rtc_app/view/news_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../API Online/API.dart';
+import '../API Online/api_service.dart';
 import '../constants/provider.dart';
 
 class LoginPage extends StatefulWidget {

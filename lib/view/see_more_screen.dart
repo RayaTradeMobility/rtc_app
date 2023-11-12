@@ -69,7 +69,8 @@ class _SeeMorePageState extends State<SeeMorePage> {
                                         width: 14,
                                       ),
                                       Text(
-                                        widget.model.createdBY!,
+                                        widget.model.createdBY ??
+                                            "Human Resources",
                                         style: const TextStyle(
                                             fontWeight: FontWeight.w900,
                                             fontSize: 20),

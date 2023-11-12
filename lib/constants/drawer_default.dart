@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:rtc_app/constants/constant.dart';
 import 'package:rtc_app/models/LoginModel.dart';
+import 'package:rtc_app/view/employee_offer.dart';
 import 'package:rtc_app/view/event_screen.dart';
 import 'package:rtc_app/view/job_screen.dart';
 import 'package:rtc_app/view/know_your_company.dart';
@@ -10,7 +11,8 @@ import 'package:rtc_app/view/login_screen.dart';
 import 'package:rtc_app/view/profile_screen.dart';
 
 import '../view/complaints_screen.dart';
-import '../view/home_screen.dart';
+import '../view/news_screen.dart';
+import '../view/suggestion_screen.dart';
 
 class MyDrawer extends StatefulWidget {
   const MyDrawer({super.key, required this.user});
@@ -123,7 +125,11 @@ class _MyDrawerState extends State<MyDrawer> {
               ],
             ),
             onTap: () {
-              Navigator.pop(context);
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return SuggestionScreen(
+                  user: widget.user,
+                );
+              }));
             },
           ),
           ListTile(
@@ -185,7 +191,9 @@ class _MyDrawerState extends State<MyDrawer> {
               ],
             ),
             onTap: () {
-              Navigator.pop(context);
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return EmployeeOfferScreen(user: widget.user);
+              }));
             },
           ),
           ListTile(

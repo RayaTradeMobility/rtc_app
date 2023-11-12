@@ -1,4 +1,3 @@
-// ignore_for_file: file_names
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
@@ -9,7 +8,7 @@ import 'package:rtc_app/models/LoginModel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class API {
-  String url = "http://www.rayatrade.com/RayaTadePortalAPI/api/";
+  String url = "http://www.rayatrade.com/RayaTadePortalAPI/api";
 
   void downloadFile(String fileUrl) async {
     var time = DateTime.now().millisecondsSinceEpoch;
@@ -41,9 +40,7 @@ class API {
 
   login(String username, String password) async {
     var request = http.Request(
-        'GET',
-        Uri.parse(
-            'http://www.rayatrade.com/RayaTadePortalAPI/api/users/getuserinfo/NA/$username/$password'));
+        'GET', Uri.parse('$url/users/getuserinfo/NA/$username/$password'));
 
     var streamedResponse = await request.send();
     var response = await http.Response.fromStream(streamedResponse);

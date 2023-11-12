@@ -63,7 +63,13 @@ class _HomeScreenState extends State<HomeScreen> {
                         scrollDirection: Axis.vertical,
                         itemBuilder: (context, index) {
                           return CardItem(
-                              model: model, index: index, namePage: namePage, liked: true, comment: true, seeMoreBool: true,);
+                            model: model,
+                            index: index,
+                            namePage: namePage,
+                            liked: true,
+                            comment: true,
+                            seeMoreBool: true,
+                          );
                         });
                   } else if (snapshot.hasError) {
                     const SizedBox(

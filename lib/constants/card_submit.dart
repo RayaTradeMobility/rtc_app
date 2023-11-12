@@ -1,11 +1,14 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'constant.dart';
 
 class SubmitCard extends StatefulWidget {
-  const SubmitCard({super.key});
+  const SubmitCard({super.key, required this.isSubmitCV});
+
+  final bool isSubmitCV;
 
   @override
   State<SubmitCard> createState() => _SubmitCardState();
@@ -16,6 +19,19 @@ class _SubmitCardState extends State<SubmitCard> {
   bool imp = false;
   final TextEditingController _title = TextEditingController();
   final TextEditingController _description = TextEditingController();
+  String? _fileName;
+  String? _filePath;
+
+  Future<void> _selectFile() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+    if (result != null) {
+      setState(() {
+        _filePath = result.files.single.path;
+        _fileName = result.files.single.name;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +83,6 @@ class _SubmitCardState extends State<SubmitCard> {
                                       BoxShadow(
                                         color: Colors.red,
                                         blurRadius: 30.0,
-                                        // Increase blur radius for more intensity
                                         spreadRadius: 6.0,
                                       ),
                                     ],
@@ -109,6 +124,27 @@ class _SubmitCardState extends State<SubmitCard> {
                     ),
                   ),
                 ),
+                widget.isSubmitCV == true
+                    ? Row(
+                        children: [
+                          ElevatedButton(
+                            onPressed: _selectFile,
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: MyColorsSample.primary,
+                            ),
+                            child: Text(
+                              _filePath != null
+                                  ? "File Selected"
+                                  : "Choose File",
+                              style: const TextStyle(color: Colors.white),
+                            ),
+                          ),
+                          _filePath != null
+                              ? Text("$_fileName")
+                              : const Text("  No Selected File")
+                        ],
+                      )
+                    : Container(),
                 SizedBox(
                   height: height / 30,
                 ),

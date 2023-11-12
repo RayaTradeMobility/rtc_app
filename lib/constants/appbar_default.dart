@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:rtc_app/constants/constant.dart';
 import 'package:rtc_app/constants/provider.dart';
 
-import '../view/home_screen.dart';
+import '../view/news_screen.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   const MyAppBar({super.key});

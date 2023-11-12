@@ -20,21 +20,21 @@ class LoginModel {
 
   LoginModel(
       {this.company,
-        this.department,
-        this.grade,
-        this.hiringDate,
-        this.managerSHRID,
-        this.depManagerSHRID,
-        this.name,
-        this.title,
-        this.birthDate,
-        this.maritalStatus,
-        this.gender,
-        this.address,
-        this.email,
-        this.portalPassword,
-        this.loginName,
-        this.hRID});
+      this.department,
+      this.grade,
+      this.hiringDate,
+      this.managerSHRID,
+      this.depManagerSHRID,
+      this.name,
+      this.title,
+      this.birthDate,
+      this.maritalStatus,
+      this.gender,
+      this.address,
+      this.email,
+      this.portalPassword,
+      this.loginName,
+      this.hRID});
 
   LoginModel.fromJson(List<dynamic> json) {
     if (json.isNotEmpty) {
@@ -57,6 +57,7 @@ class LoginModel {
       hRID = data['HR_ID'];
     }
   }
+
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['Company'] = company;

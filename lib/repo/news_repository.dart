@@ -7,9 +7,10 @@ import 'package:rtc_app/models/news_model.dart';
 import '../models/categories_news_model.dart';
 
 class NewsRepository {
+  String urls = "http://www.rayatrade.com/RayaTadePortalAPI/api";
+
   Future<List<NewsModel>> getCards(String username) async {
-    String url =
-        'http://www.rayatrade.com/RayaTadePortalAPI/api/Cards/GetCards/436/$username';
+    String url = '$urls/Cards/GetCards/436/$username';
 
     final response = await http.get(Uri.parse(url));
 
@@ -38,8 +39,36 @@ class NewsRepository {
   }
 
   Future<List<NewsModel>> getEventCards(String username) async {
-    String url =
-        'http://www.rayatrade.com/RayaTadePortalAPI/api/Cards/GetCards/442/$username';
+    String url = '$urls/Cards/GetCards/442/$username';
+
+    final response = await http.get(Uri.parse(url));
+
+    if (kDebugMode) {
+      print(response.body);
+    }
+
+    if (response.statusCode == 200) {
+      final json = jsonDecode(response.body);
+
+      if (json is List) {
+        List<NewsModel> models = [];
+
+        for (var item in json) {
+          final model = NewsModel.fromJson(item);
+          models.add(model);
+        }
+
+        if (models.isNotEmpty) {
+          return models;
+        }
+      }
+    }
+
+    throw Exception('Error');
+  }
+
+  Future<List<NewsModel>> getEmployeeOfferCards(String username) async {
+    String url = '$urls/Cards/GetCards/443/7';
 
     final response = await http.get(Uri.parse(url));
 
@@ -68,8 +97,7 @@ class NewsRepository {
   }
 
   Future<List<NewsModel>> getJobsCards(String username) async {
-    String url =
-        'http://www.rayatrade.com/RayaTadePortalAPI/api/Cards/GetCards/440/$username';
+    String url = '$urls/Cards/GetCards/440/$username';
 
     final response = await http.get(Uri.parse(url));
 
@@ -98,8 +126,7 @@ class NewsRepository {
   }
 
   Future<List<NewsModel>> getKYCCards(String username) async {
-    String url =
-        'http://www.rayatrade.com/RayaTadePortalAPI/api/Cards/GetCards/439/$username';
+    String url = '$urls/Cards/GetCards/439/$username';
 
     final response = await http.get(Uri.parse(url));
 
@@ -128,8 +155,7 @@ class NewsRepository {
   }
 
   Future<List<NewsModel>> getPoliciesCards(String username) async {
-    String url =
-        'http://www.rayatrade.com/RayaTadePortalAPI/api/Cards/GetCards/6/$username';
+    String url = '$urls/Cards/GetCards/6/$username';
 
     final response = await http.get(Uri.parse(url));
 
@@ -158,8 +184,36 @@ class NewsRepository {
   }
 
   Future<List<NewsModel>> getComplaintsCards(String username) async {
-    String url =
-        'http://www.rayatrade.com/RayaTadePortalAPI/api/Cards/GetCards/4/7';
+    String url = '$urls/Cards/GetCards/4/7';
+
+    final response = await http.get(Uri.parse(url));
+
+    if (kDebugMode) {
+      print(response.body);
+    }
+
+    if (response.statusCode == 200) {
+      final json = jsonDecode(response.body);
+
+      if (json is List) {
+        List<NewsModel> models = [];
+
+        for (var item in json) {
+          final model = NewsModel.fromJson(item);
+          models.add(model);
+        }
+
+        if (models.isNotEmpty) {
+          return models;
+        }
+      }
+    }
+
+    throw Exception('Error');
+  }
+
+  Future<List<NewsModel>> getSuggestionCards(String username) async {
+    String url = '$urls/Cards/GetCards/438/7';
 
     final response = await http.get(Uri.parse(url));
 

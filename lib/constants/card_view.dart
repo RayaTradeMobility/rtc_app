@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../API Online/API.dart';
+import '../API Online/api_service.dart';
 import '../models/news_model.dart';
 import '../view/see_more_screen.dart';
 import 'comment_box.dart';
