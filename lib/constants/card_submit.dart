@@ -1,13 +1,23 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:rtc_app/models/LoginModel.dart';
+import 'package:rtc_app/models/response_message_model.dart';
 
+import '../repo/news_repository.dart';
 import 'constant.dart';
 
 class SubmitCard extends StatefulWidget {
-  const SubmitCard({super.key, required this.isSubmitCV});
+  const SubmitCard(
+      {super.key,
+      required this.isSubmitCV,
+      required this.user,
+      required this.menuId});
 
+  final int menuId;
+  final LoginModel user;
   final bool isSubmitCV;
 
   @override
@@ -21,6 +31,7 @@ class _SubmitCardState extends State<SubmitCard> {
   final TextEditingController _description = TextEditingController();
   String? _fileName;
   String? _filePath;
+  NewsRepository api = NewsRepository();
 
   Future<void> _selectFile() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
@@ -150,7 +161,17 @@ class _SubmitCardState extends State<SubmitCard> {
                 ),
                 Center(
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      ResponseMessage res = await api.submit(
+                          _title.text,
+                          _description.text,
+                          widget.menuId,
+                          widget.user.name!,
+                          widget.user.hRID!);
+                      if (kDebugMode) {
+                        print(res);
+                      }
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: MyColorsSample.primary,
                     ),

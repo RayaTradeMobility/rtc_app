@@ -26,6 +26,7 @@ class _PoliciesScreenState extends State<PoliciesScreen>
     with SingleTickerProviderStateMixin {
   NewsRepository api = NewsRepository();
   TabController? _tabController;
+  int menuId=6;
 
   @override
   void initState() {

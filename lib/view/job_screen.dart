@@ -26,6 +26,7 @@ class _JobsScreenState extends State<JobsScreen>
   NewsRepository api = NewsRepository();
   String namePage = "Jobs";
   TabController? _tabController;
+  int menuId=440;
 
   @override
   void initState() {
@@ -272,9 +273,9 @@ class _JobsScreenState extends State<JobsScreen>
                         }),
                   ),
                 ),
-                const Center(
+                 Center(
                     child: SubmitCard(
-                  isSubmitCV: true,
+                  isSubmitCV: true, user: widget.user, menuId: menuId,
                 )),
               ],
             ),

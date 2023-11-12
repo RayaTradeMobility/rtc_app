@@ -23,6 +23,7 @@ class SuggestionScreenState extends State<SuggestionScreen>
   NewsRepository api = NewsRepository();
   String namePage = "Suggestion";
   TabController? _tabController;
+  int menuId=438;
 
   @override
   void initState() {
@@ -61,7 +62,8 @@ class SuggestionScreenState extends State<SuggestionScreen>
                         return const Center(
                           child: Text('Error occurred while fetching data.'),
                         );
-                      } else {
+                      }
+                      else {
                         final model = snapshot.data!;
                         return ListView.builder(
                             itemCount: model.length,
@@ -80,8 +82,8 @@ class SuggestionScreenState extends State<SuggestionScreen>
                     },
                   ),
                 ),
-                const SubmitCard(
-                  isSubmitCV: false,
+                 SubmitCard(
+                  isSubmitCV: false, user: widget.user, menuId: menuId,
                 )
               ],
             ),

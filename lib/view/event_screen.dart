@@ -24,6 +24,7 @@ class EventScreen extends StatefulWidget {
 
 class _EventScreenState extends State<EventScreen> {
   NewsRepository api = NewsRepository();
+  int menuId=442;
 
   @override
   void initState() {

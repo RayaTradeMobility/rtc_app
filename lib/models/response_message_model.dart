@@ -1,20 +1,20 @@
 // ignore_for_file: file_names
 
 class ResponseMessage {
-  String? code;
+  int? status;
   String? message;
 
-  ResponseMessage({this.code, this.message});
+  ResponseMessage({this.status, this.message});
 
   ResponseMessage.fromJson(Map<String, dynamic> json) {
-    code = json['code'];
-    message = json['message'];
+    status = json['Status'];
+    message = json['Message'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['code'] = code;
-    data['message'] = message;
+    data['Status'] = status;
+    data['Message'] = message;
     return data;
   }
 }

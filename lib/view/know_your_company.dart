@@ -23,6 +23,7 @@ class KnowYourCompanyScreen extends StatefulWidget {
 
 class _KnowYourCompanyScreenState extends State<KnowYourCompanyScreen> {
   NewsRepository api = NewsRepository();
+  int menuId=439;
 
   @override
   void initState() {

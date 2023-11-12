@@ -26,6 +26,7 @@ class _EmployeeOfferScreenState extends State<EmployeeOfferScreen>
   NewsRepository api = NewsRepository();
   String namePage = "Employee Offer";
   TabController? _tabController;
+  int menuId=443;
 
   @override
   void initState() {

@@ -20,6 +20,7 @@ enum FilterList { bbcNews, afr, mode }
 
 class _HomeScreenState extends State<HomeScreen> {
   NewsRepository api = NewsRepository();
+  int menuId=436;
 
   @override
   void initState() {

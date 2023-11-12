@@ -22,6 +22,7 @@ class ComplaintsScreenState extends State<ComplaintsScreen>
   NewsViewModel newsViewModel = NewsViewModel();
   NewsRepository api = NewsRepository();
   String namePage = "Complaints";
+  int menuId=4;
   TabController? _tabController;
 
   @override
@@ -80,8 +81,8 @@ class ComplaintsScreenState extends State<ComplaintsScreen>
                     },
                   ),
                 ),
-                const SubmitCard(
-                  isSubmitCV: false,
+                 SubmitCard(
+                  isSubmitCV: false, user: widget.user, menuId: menuId,
                 )
               ],
             ),
